@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdexcept>
-#include <string>
 #include <vector>
 #include <stack>
 #include <map>
@@ -102,9 +101,18 @@ void print(const std::vector<std::string> &v) {
 
 int main() {
   std::string input;
+  std::vector<std::string> v;
   std::getline(std::cin, input);
-  std::vector<std::string> v = infixToPostfix(splitting(input));
-  print(v);
+  if (std::isdigit(input[input.length() - 1])) {
+    v = infixToPostfix(splitting(input));
+    print(v);
+  } else {
+    if (input.find(' ') == std::string::npos) {
+      throw std::invalid_argument("Expression must contain spaces");
+    } else {
+      v = splitting(input);
+    }
+  }
   std::cout << RPN(v);
   return 0;
 }
